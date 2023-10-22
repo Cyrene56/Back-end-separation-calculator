@@ -1,0 +1,66 @@
+package com.jisuanji.controller;
+
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.jisuanji.config.jisuan;
+import com.jisuanji.entity.JsjHistory;
+import com.jisuanji.service.IJsjHistoryService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+@RestController
+@RequestMapping("/jisuanji")
+public class JsjHistoryController {
+    @Autowired
+    IJsjHistoryService iJsjHistoryService;
+
+    @RequestMapping("/list")
+    public JsjHistory list(String str) {
+        // ...
+    }
+
+    @RequestMapping("/jisuan")
+    public String jisuan(String number1, String number2, String type) throws Exception {
+        // ...
+    }
+}
+
+class add implements jisuan {
+    @Override
+    public String jisuan(String number1, String number2) {
+        // ...
+    }
+}
+
+class subtract implements jisuan {
+    @Override
+    public String jisuan(String number1, String number2) {
+        // ...
+    }
+}
+
+class multiply implements jisuan {
+    @Override
+    public String jisuan(String number1, String number2) {
+        // ...
+    }
+}
+
+class divide implements jisuan {
+    @Override
+    public String jisuan(String number1, String number2) {
+        // ...
+    }
+}
+
+class yu implements jisuan {
+    @Override
+    public String jisuan(String number1, String number2) {
+        // ...
+    }
+}
