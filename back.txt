@@ -20,47 +20,94 @@ public class JsjHistoryController {
     IJsjHistoryService iJsjHistoryService;
 
     @RequestMapping("/list")
-    public JsjHistory list(String str) {
-        // ...
+    public JsjHistory list(String str){
+        QueryWrapper<JsjHistory> queryWrapper = new QueryWrapper<>();
+        QueryWrapper<JsjHistory> queryWrapper1 = queryWrapper.orderByDesc("id");
+        List<JsjHistory> list = iJsjHistoryService.list(queryWrapper1);
+        Map<String,JsjHistory> map = new HashMap<>();
+        for (int i = 1; i <= list.size(); i++) {
+            map.put(i+"",list.get(i-1));
+        }
+        JsjHistory jsjHistory = map.get(str);
+        return  jsjHistory;
     }
 
     @RequestMapping("/jisuan")
     public String jisuan(String number1, String number2, String type) throws Exception {
-        // ...
+        jisuan js = null;
+        if (type.equals("+")){
+            js = new add();
+        } else if (type.equals("-")) {
+            js = new subtract();
+        } else if (type.equals("*")) {
+            js = new multiply();
+        } else if (type.equals("/")){
+            js = new divide();
+        }
+        else if (type.equals("%")){
+            js = new yu();
+        } else {
+            throw new Exception("Invalid calculation method");
+        }
+        String jisuan = js.jisuan(number1, number2);
+        JsjHistory jsjHistory = new JsjHistory();
+        jsjHistory.setType(type);
+        jsjHistory.setNumber1(number1);
+        jsjHistory.setNumber2(number2);
+        jsjHistory.setJg(jisuan);
+        iJsjHistoryService.save(jsjHistory);
+        return jisuan;
     }
 }
 
-class add implements jisuan {
+class add implements jisuan{
     @Override
     public String jisuan(String number1, String number2) {
-        // ...
+        BigDecimal bigDecimal = new BigDecimal(number1);
+        BigDecimal bigDecimal1 = new BigDecimal(number2);
+        BigDecimal add = bigDecimal.add(bigDecimal1);
+        return add.toString();
     }
 }
 
-class subtract implements jisuan {
+class subtract implements jisuan{
+
     @Override
     public String jisuan(String number1, String number2) {
-        // ...
+        BigDecimal bigDecimal = a new BigDecimal(number1);
+        BigDecimal bigDecimal1 = new BigDecimal(number2);
+        BigDecimal add = bigDecimal.subtract(bigDecimal1);
+        return add.toString();
     }
 }
 
-class multiply implements jisuan {
+class multiply implements jisuan{
+
     @Override
     public String jisuan(String number1, String number2) {
-        // ...
+        BigDecimal bigDecimal = new BigDecimal(number1);
+        BigDecimal bigDecimal1 = new BigDecimal(number2);
+        BigDecimal add = bigDecimal.multiply(bigDecimal1);
+        return add.toString();
     }
 }
 
-class divide implements jisuan {
+class divide implements jisuan{
+
     @Override
     public String jisuan(String number1, String number2) {
-        // ...
+        BigDecimal bigDecimal = new BigDecimal(number1);
+        BigDecimal bigDecimal1 = new BigDecimal(number2);
+        BigDecimal add = bigDecimal.divide(bigDecimal1, 8, BigDecimal.ROUND_HALF_UP);
+        return add.toString();
     }
 }
 
-class yu implements jisuan {
+class yu implements jisuan{
+
     @Override
-    public String jisuan(String number1, String number2) {
-        // ...
+     public String jisuan(String number1, String number2) {
+       int a =  Integer.parseInt(number1) % Integer.parseInt(number2);
+        return Integer.toString(a);
     }
 }
